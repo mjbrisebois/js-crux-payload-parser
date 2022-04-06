@@ -4,7 +4,8 @@ const log				= new Logger("crux-payload-parser");
 const repr				= require('@whi/repr');
 const Essence				= require('@whi/essence');
 const EntityArchitect			= require('@whi/entity-architect');
-const { Translator }			= Essence
+const { Translator,
+	Package }			= Essence;
 const { Architecture,
 	RemodelerError,
 	EntityType }			= EntityArchitect;
@@ -74,13 +75,11 @@ class CruxConfig {
 		if ( this.options.strict )
 		    throw err;
 		else
-		    return response;
+		    return essence;
 	    }
 	});
 
 	client.addProcessor("output", (pack, req) => {
-	    const payload		= pack.value();
-
 	    if ( opts.parse_entities === false ) {
 		log.warn("Skipping Entity parser because of option:", opts.parse_entities );
 		return payload;
@@ -89,6 +88,10 @@ class CruxConfig {
 	    if ( !(this.schema instanceof Architecture) )
 		throw new TypeError(`options.schema is not an instance of Architecture; found type '${repr(this.schema)}'`);
 
+	    if ( !(pack instanceof Package) )
+		return pack;
+
+	    const payload		= pack.value();
 	    const composition		= pack.metadata("composition");
 	    log.info("Payload has composition: %s", composition );
 

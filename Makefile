@@ -29,7 +29,7 @@ test:			test-unit test-e2e
 test-debug:		test-unit-debug test-e2e-debug
 
 test-unit:		build test-setup
-	npx mocha ./tests/unit
+	LOG_LEVEL=fatal npx mocha ./tests/unit
 test-unit-debug:	build test-setup
 	LOG_LEVEL=silly npx mocha ./tests/unit
 

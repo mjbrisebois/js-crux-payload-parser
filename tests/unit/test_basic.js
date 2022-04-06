@@ -19,6 +19,14 @@ const ID				= (new HoloHash("uhCEkEvFsj08QdtgiUDBlEhwlcW5lsfqD4vKRcaGIirSBx0Wl7M
 const HEADER				= (new HoloHash("uhCkkn_kIobHe9Zt4feh751we8mDGyJuBXR50X5LBqtcSuGLalIBa")).bytes();
 const ADDRESS				= (new HoloHash("uhCEkU7zcM5NFGXIljSHjJS3mk62FfVRpniZQlg6f92zWHkOZpb2z")).bytes();
 
+let content				= {
+    "name": "Some Entity",
+    "published_at": 1624661323383,
+    "last_updated": 1624661325451,
+    "author": AGENT,
+    "deprecation": null,
+    "metadata": {},
+};
 let payload				= {
     "id": ID,
     "header": HEADER,
@@ -27,14 +35,7 @@ let payload				= {
 	"name": "entity",
 	"model": "detailed",
     },
-    "content": {
-	"name": "Some Entity",
-	"published_at": 1624661323383,
-	"last_updated": 1624661325451,
-	"author": AGENT,
-	"deprecation": null,
-	"metadata": {},
-    }
+    "content": content,
 };
 
 let collection_payload			= {
@@ -86,8 +87,57 @@ function basic_tests () {
 	expect( output.$base		).to.be.instanceof( HoloHash );
     });
 
-    it("should deconstruct something without a composition value");
-    it("should deconstruct something with an unknown composition");
+    it("should deconstruct something without a composition value", async function () {
+	let client			= new AgentClient( AGENT, {}, 1 );
+	crux_config.upgrade( client );
+
+	let output			= {
+	    "type": "success",
+	    "metadata": {},
+	    "payload": Object.assign( {}, content ),
+	};
+
+	for ( let processor of client.post_processors ) {
+	    output			= await processor( output );
+	}
+
+	expect( output.$id		).to.be.undefined;
+	expect( output.name		).to.equal("Some Entity");
+    });
+
+    it("should deconstruct something with an unknown composition", async function () {
+	let client			= new AgentClient( AGENT, {}, 1 );
+	crux_config.upgrade( client );
+
+	let output			= {
+	    "type": "success",
+	    "metadata": {
+		"composition": "unknown",
+	    },
+	    "payload": Object.assign( {}, content ),
+	};
+
+	for ( let processor of client.post_processors ) {
+	    output			= await processor( output );
+	}
+
+	expect( output.$id		).to.be.undefined;
+	expect( output.name		).to.equal("Some Entity");
+    });
+
+    it("should deconstruct something without type", async function () {
+	let client			= new AgentClient( AGENT, {}, 1 );
+	crux_config.upgrade( client );
+
+	let output			= Object.assign( {}, content );
+
+	for ( let processor of client.post_processors ) {
+	    output			= await processor( output );
+	}
+
+	expect( output.$id		).to.be.undefined;
+	expect( output.name		).to.equal("Some Entity");
+    });
 }
 
 function error_tests () {
