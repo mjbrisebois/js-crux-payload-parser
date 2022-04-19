@@ -61,7 +61,8 @@ clean-files-all-force:	clean-remove-chaff
 prepare-package:
 	FILENAME=crux-payload-parser.js WEBPACK_MODE=development npm run build
 	npm run build
-	gzip -kf dist/*.js
+	gzip -kc dist/crux-payload-parser.js dist/crux-payload-parser.js.map			> dist/crux-payload-parser.gz
+	gzip -kc dist/crux-payload-parser.prod.js dist/crux-payload-parser.prod.js.map		> dist/crux-payload-parser.prod.gz
 preview-package:	clean-files test prepare-package
 	npm pack --dry-run .
 create-package:		clean-files test prepare-package

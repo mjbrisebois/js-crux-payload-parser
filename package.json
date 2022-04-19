@@ -24,7 +24,7 @@
     "url": "https://github.com/mjbrisebois/js-crux-payload-parser"
   },
   "dependencies": {
-    "@whi/entity-architect": "^0.4.0",
+    "@whi/entity-architect": "^0.4.1",
     "@whi/essence": "^0.1.1",
     "@whi/repr": "^0.1.0",
     "@whi/weblogger": "^0.1.4",
