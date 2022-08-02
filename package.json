@@ -1,6 +1,6 @@
 {
   "name": "@whi/crux-payload-parser",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "A Javascript library that extends @whi/holochain-client with support for deconstructing data that implement Essence Payloads and Entity Architect structures.",
   "main": "src/index.js",
   "browser": "dist/crux-payload-parser.prod.js",
