@@ -16,8 +16,8 @@ const client = new AgentClient( agent, dna_map, connection, options );
 ## `new CruxConfig( schema, translator, options )`
 A class for defining response handling and restructuring.
 
-- `schema` - (*required*) a map of Entity types and their remodelers used to create an instance of
-  [`Architecture`](https://github.com/mjbrisebois/js-entity-architect/blob/08725dece70133acd74a808f8927bcf7597a09a9/docs/API.md#new-architecture-entity_types-)
+- `schema` - (*required*) a map of Entity types and its remodeler used to create an instance of
+  [`Architecture`](https://github.com/mjbrisebois/js-entity-architect/blob/518d2c508299a04321250e54db995b27785eb9bd/docs/API.md#new-architecture-entity_types-)
   - also accepts an instance of `Architecture` (from
     [`@whi/entity-architect`](https://www.npmjs.com/package/@whi/entity-architect))
 - `translator` - (*required*) a list of expected error types used to create an instance of
@@ -33,11 +33,8 @@ A class for defining response handling and restructuring.
 Example
 ```javascript
 const crux_config = new CruxConfig({
-    "entity_name": {
-        "model_name": ( content ) => {
-            // restructure 'content' values
-            return content;
-        },
+    "entity_name": ( content ) => {
+        // restructure 'content' values
     },
 });
 ```

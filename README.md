@@ -39,11 +39,8 @@ const { CruxConfig } = require('@whi/crux-payload-parser');
 const client = new AgentClient( agent, dna_map, connection, options );
 
 const crux_config = new CruxConfig({
-    "entity_name": {
-        "*": ( content ) => {
-            // restructure 'content' value
-            return content;
-        },
+    "entity_name": ( content ) => {
+        // restructure 'content' value
     },
 });
 crux_config.upgrade( client );
