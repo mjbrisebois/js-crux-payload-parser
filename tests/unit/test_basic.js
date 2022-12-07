@@ -15,7 +15,7 @@ if ( process.env.LOG_LEVEL )
     crux.log.setLevel( process.env.LOG_LEVEL.replace("silly", "trace") );
 
 const AGENT				= (new HoloHash("uhCAkocJKdTlSkQFVmjPW_lA_A5kusNOORPrFYJqT8134Pag45Vjf")).bytes();
-const ID				= (new HoloHash("uhCEkEvFsj08QdtgiUDBlEhwlcW5lsfqD4vKRcaGIirSBx0Wl7MVf")).bytes();
+const ID				= (new HoloHash("uhCkkEvFsj08QdtgiUDBlEhwlcW5lsfqD4vKRcaGIirSBx0Wl7MVf")).bytes();
 const ACTION				= (new HoloHash("uhCkkn_kIobHe9Zt4feh751we8mDGyJuBXR50X5LBqtcSuGLalIBa")).bytes();
 const ADDRESS				= (new HoloHash("uhCEkU7zcM5NFGXIljSHjJS3mk62FfVRpniZQlg6f92zWHkOZpb2z")).bytes();
 
@@ -31,10 +31,7 @@ let payload				= {
     "id": ID,
     "action": ACTION,
     "address": ADDRESS,
-    "type": {
-	"name": "entity",
-	"model": "detailed",
-    },
+    "type": "entity",
     "content": content,
 };
 
@@ -46,13 +43,10 @@ let collection_payload			= [
 
 
 const crux_config			= new CruxConfig({
-    "entity": {
-	"*": ( content ) => {
-	    content.published_at	= new Date( content.published_at );
-	    content.last_updated	= new Date( content.last_updated );
-	    content.author		= new HoloHash( content.author );
-	    return content;
-	},
+    "entity": ( content ) => {
+	content.published_at	= new Date( content.published_at );
+	content.last_updated	= new Date( content.last_updated );
+	content.author		= new HoloHash( content.author );
     },
 });
 

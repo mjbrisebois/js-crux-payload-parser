@@ -36,12 +36,9 @@ class CruxConfig {
 
 	if ( !(schema instanceof Architecture) ) {
 	    const entity_types		= [];
-	    for ( let [name, models] of Object.entries( schema ) ) {
-		log.debug("Setting up EntityType(%s) with models: %s", name, Object.keys( models ).map( m => `'${m}'` ).join(", ") );
-		const type		= new EntityType( name );
-		for ( let [key, fn] of Object.entries( models ) ) {
-		    type.model( key, fn );
-		}
+	    for ( let [name, remodeler] of Object.entries( schema ) ) {
+		log.debug("Setting up EntityType(%s): %s", name );
+		const type		= new EntityType( name, remodeler );
 		entity_types.push( type );
 	    }
 
