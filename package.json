@@ -43,6 +43,6 @@
     "webpack-cli": "^4.7.2"
   },
   "peerDependencies": {
-    "@whi/holochain-client": "^0.50.0"
+    "@whi/holochain-client": ">=0.50.0"
   }
 }
